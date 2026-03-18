@@ -3,11 +3,12 @@ using Postgrest.Models;
 
 namespace BooksTracker.Models
 {
-    // BaseModel is from Postgrest library (that is included in the supbase client)
+    // BaseModel is from Postgrest library 
 
     [Table("books")]
     public class Book : BaseModel 
     {
+        // Id is automatically added to the table in supabase
         [PrimaryKey("id", false)]
         public int Id { get; set; }
 
@@ -20,6 +21,10 @@ namespace BooksTracker.Models
         [Column("image_url")]
         public string ImageUrl { get; set; }
 
+        // made_at is automatically added to the table in supabase 
+        // made_at's name has been changed from it's originally name
+        // made_at generates a timestamp for each row upon insertion
+        // timestamp = date/time when an event occured
         [Column("made_at", ignoreOnInsert: true)]
         public DateTime MadeAt { get; set; }
 

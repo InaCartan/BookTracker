@@ -11,7 +11,7 @@ namespace BooksTracker.ViewModels
     {
         private readonly IDataService _dataService;
 
-        // In Shaa Allah, we get notified when an item is added/removed & if the whole list is refreshed
+        // In Shaa Allah, ObservableCollection is used to update the ui if a change happens, thus Books updates the ui
         public ObservableCollection<Book> Books { get; set; } = new();
 
         public BookListingViewModel(IDataService dataService)
@@ -19,6 +19,12 @@ namespace BooksTracker.ViewModels
             _dataService = dataService;
         }
 
+
+        // this method is doing the following:
+        // "GetBooks" in the file, DataService, gets the books from the database
+        // "GetBooks" (the func below) clear the book collection it currently have
+        // then calls the function from DataService, and update it's book collection
+        // then it updates the ui's collections of books
         [RelayCommand]
         public async Task GetBooks()
         {
@@ -27,7 +33,7 @@ namespace BooksTracker.ViewModels
 
             try
             {
-                //should "books" not be returned so it's value can be used?
+                
                 var books = await _dataService.GetBooks();
 
                 if (books.Any()) //In Shaa Allah, "Any" checks if there contains something in books
@@ -46,6 +52,7 @@ namespace BooksTracker.ViewModels
             
         }
 
+        // In Shaa Allah, this func navigates to AddBookPage.xaml.cs (not the viewmodel)
         [RelayCommand]
         private async Task AddBook() => await Shell.Current.GoToAsync("AddBookPage");
 
@@ -69,6 +76,8 @@ namespace BooksTracker.ViewModels
 
         }
 
+
+        // In Shaa Allah, this func navigates to UpdateBookPage.xaml.cs (not the viewmodel)
         [RelayCommand]
         private async Task UpdateBook(Book book) => await Shell.Current.GoToAsync("UpdateBookPage", new Dictionary<string, object>
         {

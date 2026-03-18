@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BooksTracker.Models;
+using Microsoft.VisualBasic;
+using Supabase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BooksTracker.Models;
-using Supabase;
 
 namespace BooksTracker.Services
 {
@@ -26,9 +27,10 @@ namespace BooksTracker.Services
         public async Task DeleteBook(int id)
         {
             await _supabaseClient.From<Book>()
-                .Where(b => b.Id == id).Delete(); // Why Id with capitalise 'I'
+                .Where(b => b.Id == id).Delete();
         }
 
+       //In Shaa Allah, this interface enables iteration over a collection of elements (check "C#" notes for more)
         public async Task<IEnumerable<Book>> GetBooks()
         {
             var response = await _supabaseClient.From<Book>().Get();
